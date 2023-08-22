@@ -1,0 +1,10 @@
+date_string_column,float_column,string_column,integer_column
+2023-04-03,3.14,apple,4
+2023-04-25,3.7,correct_string,4
+ ,2,cherry,
+2023-04-03, ,23,10
+2023-28-03,1,values,20
+2023-04-03,4,strings, 
+,3.86,returns,23
+2023-11-03,23,final,23
+2023-04-03,,,43

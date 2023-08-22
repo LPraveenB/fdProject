@@ -1,0 +1,10 @@
+date_string_column,float_column,string_column,integer_column
+20230403,3.14,apple,4
+20230521,3.7,correct_string,4
+20231104,2.04,cherry,2
+20230415,1.618,23,10
+20230516,1.0,values,20
+20231402,4.0,strings,30
+ ,3.86,returns,23
+20230516,23.0,final,23
+20230521,34.25,,43

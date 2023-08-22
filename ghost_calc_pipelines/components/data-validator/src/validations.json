@@ -1,0 +1,651 @@
+{
+  "FD_STORE_INV" : {
+    "columns" : [
+      {
+        "name": "SKU",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "LOCATION",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "DATE",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["string"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          },
+          {
+            "name": "date_format",
+            "values": ["%Y-%m-%d"]
+          }
+        ]
+      },
+      {
+        "name": "IP_QTY_BOP_INV",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["double"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "IP_QTY_BOP_INTRANS",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["double"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "IP_QTY_EOP_SOH",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["double"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "IP_QTY_EOP_INTRANS",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["double"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "IP_QTY_EOP_INV",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["double"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      }
+    ]
+  },
+  "FD_SALES" : {
+    "columns" : [
+      {
+        "name": "SKU",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "LOCATION",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "DATE",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["string"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          },
+          {
+            "name": "date_format",
+            "values": ["%Y-%m-%d"]
+          }
+        ]
+      },
+      {
+        "name": "SALES_UNITS",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["double"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "SALES_TOTAL_RETAIL",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["double"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      }
+    ]
+  },
+  "FD_INV_ADJ" : {
+    "columns" : [
+      {
+        "name": "SKU",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "LOCATION",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "DATE",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["string"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          },
+          {
+            "name": "date_format",
+            "values": ["%Y-%m-%d"]
+          }
+        ]
+      },
+      {
+        "name": "ADJ_QTY",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["double"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      }
+    ]
+  },
+  "FD_STORE_TRANSFERS_IN" : {
+    "columns" : [
+      {
+        "name": "SKU",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "LOCATION",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "DATE",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["string"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          },
+          {
+            "name": "date_format",
+            "values": ["%Y-%m-%d"]
+          }
+        ]
+      },
+      {
+        "name": "TRAN_CODE",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "fd_store_transfers_in_UNITS",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["double"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      }
+    ]
+  },
+  "FD_DSD_INVOICE" : {
+    "columns" : [
+      {
+        "name": "SKU",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "LOCATION",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "DATE",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["string"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          },
+          {
+            "name": "date_format",
+            "values": ["%Y-%m-%d"]
+          }
+        ]
+      },
+      {
+        "name": "DSD_INVC_QTY_RCPT",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["double"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      }
+    ]
+  },
+  "FD_SKU_MASTER" : {
+    "columns" : [
+      {
+        "name": "SKU",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "SKU_WDTH",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["double"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "SKU_HGT",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["double"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "SKU_DPTH",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["double"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "BASE_RETAIL",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["double"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "ORIG_RETAIL",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["double"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "LOB",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "CDIV",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "CAT",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "DIV",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "DEPT",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "CLASS",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      }
+    ]
+  },
+  "FD_PHYSICAL_INV_ADJUSTMENTS" : {
+    "columns" : [
+      {
+        "name": "SKU",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "LOCATION",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "DATE",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["string"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          },
+          {
+            "name": "date_format",
+            "values": ["%Y-%m-%d"]
+          }
+        ]
+      },
+      {
+        "name": "fd_physical_inv_adjustments_UNITS",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["double"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      }
+    ]
+  },
+  "FD_PHYSICAL_INVENTORY_COUNT_SCHEDULE" : {
+    "columns" : [
+      {
+        "name": "LOCATION",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          }
+        ]
+      },
+      {
+        "name": "INVENTORY_DATE",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["string"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          },
+          {
+            "name": "date_format",
+            "values": ["%Y-%m-%d"]
+          }
+        ]
+      },
+      {
+        "name": "RECONCILIATION_DATE",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["string"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "null", " "]
+          },
+          {
+            "name": "date_format",
+            "values": ["%Y-%m-%d"]
+          }
+        ]
+      }
+    ]
+  }
+}

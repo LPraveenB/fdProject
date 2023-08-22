@@ -1,0 +1,12 @@
+tables_to_process = [
+    "FD_SALES",
+    "FD_RETURNS",
+    "FD_PHYSICAL_INVENTORY_COUNT_SCHEDULE",
+    "FD_INV_ADJ",
+    "FD_PHYSICAL_INV_ADJUSTMENTS",
+    "FD_STORE_TRANSFERS_IN",
+    "FD_DSD_INVOICE",
+    "FD_STORE_INV",
+    "FD_SKU_MASTER"
+]
+

@@ -1,0 +1,146 @@
+{
+  "inventory_snapshot": {
+    "source_table_name" : "FD_STORE_INV",
+    "columns": {
+      "sku": {"src": "SKU", "dest": "SKU", "data_type": "number"},
+      "location": {"src": "LOCATION", "dest": "LOCATION", "data_type": "number"},
+      "date": {"src": "DATE", "dest": "DATE", "data_type": "datetime"},
+      "day_start_total_balance": {"src": null, "dest": "IP_QTY_BOP_INV", "data_type": "number"},
+      "day_end_total_balance": {"src": null, "dest": "IP_QTY_EOP_INV", "data_type": "number"},
+      "day_start_instrans_balance": {"src": "IP_QTY_BOP_INTRANS", "dest": "IP_QTY_BOP_INTRANS", "data_type": "number"},
+      "day_end_soh_balance": {"src": "IP_QTY_EOP_SOH", "dest": "IP_QTY_EOP_SOH", "data_type": "number"},
+      "day_end_intras_balance": {"src": "IP_QTY_EOP_INTRANS", "dest": "IP_QTY_EOP_INTRANS", "data_type": "number"},
+      "day_begin_soh_balance": {"src": "IP_QTY_BOP_SOH", "dest": "IP_QTY_BOP_SOH", "data_type": "number"}
+    }
+  },
+  "inventory_adjustment": {
+    "source_table_name" : "FD_INV_ADJ",
+    "columns": {
+      "sku": {"src": "SKU", "dest": "SKU", "data_type": "number"},
+      "location": {"src": "LOCATION", "dest": "LOCATION", "data_type": "number"},
+      "date": {"src": "ADJ_DATE", "dest": "DATE", "data_type": "datetime"},
+      "adj_units": {"src": "ADJ_QTY", "dest": "ADJ_QTY", "data_type": "number"},
+      "adj_reason": {"src": "REASON", "dest": "REASON", "data_type": "number", "nullable": "Y"},
+      "damage_units": {"src": null, "dest": "DAMAGE_QTY"},
+      "storeuse_units": {"src": null, "dest": "STOREUSE_QTY"},
+      "expired_units": {"src": null, "dest": "EXPIRED_QTY"},
+      "scanerr_units": {"src": null, "dest": "SCANERR_QTY"},
+      "intraday_count": {"src": null, "dest": "CC_INTRADAY_COUNT"},
+      "pos_intraday_count": {"src": null, "dest": "POS_CC_INTRADAY_COUNT"},
+      "neg_intraday_count": {"src": null, "dest": "NEG_CC_INTRADAY_COUNT"},
+      "pos_adj_units": {"src": null, "dest": "POS_CC_QTY"},
+      "neg_adj_units": {"src": null, "dest": "NEG_CC_QTY"}
+    }
+  },
+  "sales": {
+    "source_table_name" : "FD_SALES",
+    "columns": {
+      "sku": {"src": "SKU", "dest": "SKU", "data_type": "number"},
+      "location": {"src": "LOCATION", "dest": "LOCATION", "data_type": "number"},
+      "date": {"src": "TRAN_DATE", "dest": "DATE", "data_type": "datetime"},
+      "sales_units": {"src": "UNITS", "dest": "SALES_UNITS", "data_type": "number"},
+      "sales_price_total": {"src": "TOTAL_RETAIL", "dest": "SALES_TOTAL_RETAIL", "data_type": "number"},
+      "sales_count": {"src": null, "dest": "SALES_COUNT"},
+      "bulk_sales_units": {"src": null, "dest": "BULK_SALES_UNITS"}
+    }
+  },
+  "returns": {
+    "source_table_name" : "FD_RETURNS",
+    "columns": {
+      "sku": {"src": "SKU", "dest": "SKU", "data_type": "number"},
+      "location": {"src": "LOCATION", "dest": "LOCATION", "data_type": "number"},
+      "date": {"src": "TRAN_DATE", "dest": "DATE", "data_type": "datetime"},
+      "return_units": {"src": "UNITS", "dest": "RETURN_UNITS", "data_type": "number"}
+    }
+  },
+  "store_transfers": {
+    "source_table_name" : "FD_STORE_TRANSFERS_IN",
+    "columns": {
+      "sku": {"src": "SKU", "dest": "SKU", "data_type": "number"},
+      "location": {"src": "LOCATION", "dest": "LOCATION", "data_type": "number"},
+      "date": {"src": "TRAN_DATE", "dest": "DATE", "data_type": "datetime"},
+      "transfer_code": {"src": "TRAN_CODE", "dest": "TRANSFER_CODE", "data_type": "number"},
+      "transfer_units": {"src": "UNITS", "dest": "TRANSFER_UNITS", "data_type": "number"},
+      "in_transit_units": {"src": null, "dest": "INTRANSIT_RECORDED"},
+      "dsd_units": {"src": null, "dest": "DSD_RECORDED"}
+    }
+  },
+  "store_invoice": {
+    "source_table_name" : "FD_DSD_INVOICE",
+    "columns": {
+      "sku": {"src": "SKU", "dest": "SKU", "data_type": "number"},
+      "location": {"src": "LOCATION", "dest": "LOCATION", "data_type": "number"},
+      "date": {"src": "SHIPMENT_RECEIVED_DATE", "dest": "DATE", "data_type": "datetime"},
+      "invoice_units": {"src": "INVC_QTY_RCPT", "dest": "DSD_INVC_QTY_RCPT", "data_type": "number"}
+    }
+  },
+  "sku": {
+    "source_table_name" : "FD_SKU_MASTER",
+    "columns": {
+      "sku": {"src": "SKU", "dest": "SKU", "data_type": "number"},
+      "width": {"src": "SKU_WDTH", "dest": "SKU_WDTH", "data_type": "number"},
+      "height": {"src": "SKU_HGT", "dest": "SKU_HGT", "data_type": "number"},
+      "depth": {"src": "SKU_DPTH", "dest": "SKU_DPTH", "data_type": "number"},
+      "base_price": {"src": "BASE_RETAIL", "dest": "BASE_RETAIL", "data_type": "number"},
+      "orig_price": {"src": "ORIG_RETAIL", "dest": "ORIG_RETAIL", "data_type": "number"},
+      "line_of_business": {"src": "LOB", "dest": "LOB", "data_type": "number"},
+      "class_division": {"src": "CDIV", "dest": "CDIV", "data_type": "number"},
+      "category": {"src": "CAT", "dest": "CAT", "data_type": "number"},
+      "division": {"src": "DIV", "dest": "DIV", "data_type": "number"},
+      "department": {"src": "DEPT", "dest": "DEPT", "data_type": "number"},
+      "class": {"src": "CLASS", "dest": "CLASS", "data_type": "number"}
+    }
+  },
+  "yearly_audit": {
+    "source_table_name" : "FD_PHYSICAL_INV_ADJUSTMENTS",
+    "columns": {
+      "sku": {"src": "SKU", "dest": "SKU", "data_type": "number"},
+      "location": {"src": "LOCATION", "dest": "LOCATION", "data_type": "number"},
+      "audit_date": {"src": "TRAN_DATE", "dest": "AUDIT_DATE", "data_type": "datetime"},
+      "audit_units": {"src": "UNITS", "dest": "AUDIT_UNITS", "data_type": "number"}
+    }
+  },
+  "yearly_audit_schedule": {
+    "source_table_name" : "FD_PHYSICAL_INVENTORY_COUNT_SCHEDULE",
+    "columns": {
+      "location": {"src": "LOCATION", "dest": "LOCATION", "data_type": "number"},
+      "audit_date": {"src": "INVENTORY_DATE", "dest": "AUDIT_DATE", "data_type": "datetime"},
+      "date": {"src": "RECONCILIATION_DATE", "dest": "DATE", "data_type": "datetime"},
+      "audit_flag": {"src": null, "dest": "YEAR_AUDIT_DAY_FLAG"}
+    }
+  },
+  "carrier_master": {
+    "source_table_name" : "FD_CARRIER_DETAILS",
+    "columns": {
+      "shipment_id": {"src": "SHIPMENT_XID", "dest": "SHIPMENT_XID", "data_type": "number"},
+      "stop_num": {"src": "STOP_NUM", "dest": "STOP_NUM", "data_type": "number"},
+      "location_gid": {"src": "LOCATION_GID", "dest": "LOCATION_GID", "data_type": "string"},
+      "estimated_arrival": {"src": "ESTIMATED_ARRIVAL", "dest": "ESTIMATED_ARRIVAL", "data_type": "datetime"},
+      "planned_arrival": {"src": "PLANNED_ARRIVAL", "dest": "PLANNED_ARRIVAL", "data_type": "datetime"},
+      "actual_arrival": {"src": "ACTUAL_ARRIVAL", "dest": "ACTUAL_ARRIVAL", "data_type": "datetime"},
+      "start_time": {"src": "START_TIME", "dest": "START_TIME", "data_type": "datetime"},
+      "end_time": {"src": "END_TIME", "dest": "END_TIME", "data_type": "datetime"}
+    }
+  },
+  "derived_fields": {
+    "source_table_name" : null,
+    "columns": {
+      "orig_load_date": {"src": null, "dest": "ORIG_LOAD_DATE"},
+      "load_date": {"src": null, "dest": "LOAD_DATE"},
+      "dsd_transferred_units": {"src": null, "dest": "DSD_TRANSFERRED_UNITS"},
+      "audit_day_units": {"src": null, "dest": "YEAR_AUDIT_UNITS"},
+      "audit_adj_units": {"src": null, "dest": "AUDIT_ADJ_QTY"},
+      "sales_units_without_return": {"src": null, "dest": "SALES_UNITS_WITHOUT_RETURN"},
+      "onhand_recorded": {"src": null, "dest": "ONHAND_RECORDED"},
+      "sales_unit_retail": {"src": null, "dest": "SALES_UNIT_RETAIL"},
+      "pre_audit_cc_day_flag": {"src": null, "dest": "PRE_AUDIT_CC_DAY_FLAG"},
+      "audit_adj_eop_soh": {"src": null, "dest": "CURDAY_IP_QTY_EOP_SOH"},
+      "rev_day_end_soh_balance": {"src": null, "dest": "REV_IP_QTY_EOP_SOH"},
+      "oos_binary_target": {"src": null, "dest": "OOS_BINARY_TARGET"},
+      "hl_binary_target": {"src": null, "dest": "HL_BINARY_TARGET"},
+      "ratio_target": {"src": null, "dest": "REV_TARGET_RATIO"},
+      "dc_transferred_units": {"src": null, "dest": "DC_TRANSFERRED_UNITS"}
+
+    }
+  }
+}

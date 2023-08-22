@@ -1,0 +1,122 @@
+{
+  "FD_STORE_INV" : {
+    "columns" : [
+      {
+        "name": "date_string_column",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["string"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "nan"]
+          },
+          {
+            "name": "date_format",
+            "values": ["%Y%m%d"]
+          }
+        ]
+      },
+      {
+        "name": "float_column",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["double"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "nan"]
+          }
+        ]
+      },
+      {
+        "name": "string_column",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["string"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "nan"]
+          }
+        ]
+      },
+      {
+        "name": "integer_column",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["int"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "nan"]
+          }
+        ]
+      }
+    ]
+  },
+  "FD_RETURNS" : {
+    "columns" : [
+      {
+        "name": "date_string_column",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["string"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "nan"]
+          },
+          {
+            "name": "date_format",
+            "values": ["%Y%m%d"]
+          }
+        ]
+      },
+      {
+        "name": "float_column",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["double"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "nan"]
+          }
+        ]
+      },
+      {
+        "name": "string_column",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["string"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "nan"]
+          }
+        ]
+      },
+      {
+        "name": "integer_column",
+        "validations": [
+          {
+            "name": "data_type",
+            "values": ["string"]
+          },
+          {
+            "name": "null_check",
+            "values": ["", "nan"]
+          }
+        ]
+      }
+    ]
+  }
+}
