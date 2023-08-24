@@ -208,11 +208,11 @@ def start_inference_metric(location_groups, **context):
 @dag(schedule_interval=None, default_args=default_args, catchup=False)
 def prod_pipeline_v1():
     valid_files = threshold(validator.expand(ingested_files=fd_ingestion()))
-    # location_groups = get_list_location_groups(preprocess.expand(valid_files=valid_files))
-    # denorm_processed_grp = start_bfs(denorm.expand(location_groups=location_groups))
-    # bfs_location_grp = start_inference(business_fs.expand(location_groups=denorm_processed_grp))
-    # inf_location_grp = start_inference_metric(inference_helper.inference.expand(location_groups=bfs_location_grp))
-    # inference_metrics_helper.inference_metrics(inf_location_grp)
+    location_groups = get_list_location_groups(preprocess.expand(valid_files=valid_files))
+    denorm_processed_grp = start_bfs(denorm.expand(location_groups=location_groups))
+    bfs_location_grp = start_inference(business_fs.expand(location_groups=denorm_processed_grp))
+    inf_location_grp = start_inference_metric(inference_helper.inference.expand(location_groups=bfs_location_grp))
+    inference_metrics_helper.inference_metrics(inf_location_grp)
 
 
 dag = prod_pipeline_v1()
