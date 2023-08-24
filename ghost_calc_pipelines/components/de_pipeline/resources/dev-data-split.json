@@ -1,13 +1,13 @@
 {
   "base_bucket": "extracted-bucket-dollar-tree",
   "script_bucket": "vertex-scripts",
-  "base_path": "darshan/raw_data",
+  "base_path": "Praveen/raw_data",
   "input_path": "gs://user-bucket-dollar-tree/Dipeshkumar.p/fs_single_day",
   "data_split_out_path": "gs://{{base_bucket}}/{{base_path}}/{{run_date}}/data_split/",
   "max_records_per_batch": "10000",
   "parallel_cluster":"2",
   "spark_properties": {
-    "spark.executor.instances": "17",
+    "spark.executor.instances": "8",
     "spark.executor.cores": "8",
     "spark.driver.cores": "8",
     "spark.driver.memory": "32g",
