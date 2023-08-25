@@ -132,6 +132,13 @@ def denorm(location_groups):
         return location_group, batch_id
 
     @task
+    def e2e_job(**context):
+        logging.info(" location group received in submit job- ")
+        obj_helper = PipelineHelper()
+        batch_id = obj_helper.submit_e2e_validator_job(context)
+        return batch_id
+
+    @task
     def delete_job(submit_batch_details, **context):
         batch_id = submit_batch_details[1]
         location_groups = submit_batch_details[0]
@@ -139,16 +146,16 @@ def denorm(location_groups):
         obj_helper.delete_batch(constant.DENORM, batch_id, context)
         return location_groups
 
-    @task
-    def merge_denorm(location_groups, **context):
-        logging.info("merging denorm")
-        obj_helper = PipelineHelper()
-        obj_helper.denorm_merge(location_groups, context)
-        logging.info("-- merging --")
-        logging.info(location_groups)
-        return location_groups
+    # @task
+    # def merge_denorm(location_groups, **context):
+    #     logging.info("merging denorm")
+    #     obj_helper = PipelineHelper()
+    #     obj_helper.denorm_merge(location_groups, context)
+    #     logging.info("-- merging --")
+    #     logging.info(location_groups)
+    #     return location_groups
 
-    denorm_location_group = merge_denorm(delete_job(submit_job(location_groups)))
+    denorm_location_group = delete_job(e2e_job(submit_job(location_groups)))
     logging.info(denorm_location_group)
     return denorm_location_group
 
@@ -210,9 +217,9 @@ def prod_pipeline_v1():
     valid_files = threshold(validator.expand(ingested_files=fd_ingestion()))
     location_groups = get_list_location_groups(preprocess.expand(valid_files=valid_files))
     denorm_processed_grp = start_bfs(denorm.expand(location_groups=location_groups))
-    bfs_location_grp = start_inference(business_fs.expand(location_groups=denorm_processed_grp))
-    inf_location_grp = start_inference_metric(inference_helper.inference.expand(location_groups=bfs_location_grp))
-    inference_metrics_helper.inference_metrics(inf_location_grp)
+    # bfs_location_grp = start_inference(business_fs.expand(location_groups=denorm_processed_grp))
+    # inf_location_grp = start_inference_metric(inference_helper.inference.expand(location_groups=bfs_location_grp))
+    # inference_metrics_helper.inference_metrics(inf_location_grp)
 
 
 dag = prod_pipeline_v1()

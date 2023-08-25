@@ -1,11 +1,10 @@
 {
   "base_bucket": "extracted-bucket-dollar-tree",
-  "script_bucket": "vertex-scripts",
+  "script_bucket": "Praveen",
   "script_folder": "de-scripts",
   "base_path": "Praveen/raw_data",
   "input_path": "gs://{{base_bucket}}/{{base_path}}/{{run_date}}/data-denorm/",
   "error_path": "gs://{{base_bucket}}/{{base_path}}/{{run_date}}/error/",
-  "master_src_path": "gs://extracted-bucket-dollar-tree/Ramalingam/prod/demo/runs/master/",
   "merge_path": "gs://{{base_bucket}}/{{base_path}}/{{run_date}}/data-merge",
   "historical_mode": "N",
   "parallel_cluster": "2",
@@ -20,7 +19,7 @@
     "spark.sql.autoBroadcastJoinThreshold": "-1",
     "spark.executor.extraJavaOptions":"-XX:+UseG1GC"
   },
-  "main_python_file_uri":"gs://{{script_bucket}}/{{script_folder}}/data-denorm/denormalizer.py",
+  "main_python_file_uri":"gs://{{script_bucket}}/{{script_folder}}/e2e-validator/e2eValidationComponent.py",
   "python_file_uris": ["gs://vertex-scripts/de-scripts/data-denorm/table_mapping_config.py","gs://vertex-scripts/de-scripts/data-denorm/utils.py"],
   "file_uris":["gs://vertex-scripts/de-scripts/data-denorm/resources/table_mapping.json"]
 }

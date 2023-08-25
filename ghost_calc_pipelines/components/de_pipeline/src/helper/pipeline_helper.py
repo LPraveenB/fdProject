@@ -3,6 +3,7 @@ from ghost_calc_pipelines.components.de_pipeline.src.helper.denorm_helper import
 from ghost_calc_pipelines.components.de_pipeline.src.helper.validator_helper import ValidatorHelper
 from ghost_calc_pipelines.components.de_pipeline.src.helper.threshold_helper import ThresholdHelper
 from ghost_calc_pipelines.components.de_pipeline.src.helper.preprocess_helper import PreprocessHelper
+from ghost_calc_pipelines.components.de_pipeline.src.helper.e2e_validation_helper import E2EHelper
 from ghost_calc_pipelines.components.de_pipeline.src.helper.merge_helper import MergeHelper
 # from ghost_calc_pipelines.components.de_pipeline.src.helper.inference_helper import InferenceHelper
 from ghost_calc_pipelines.components.de_pipeline.src.helper.bfs_helper import BfsHelper
@@ -19,6 +20,7 @@ class PipelineHelper():
         self.denorm = DenormHelper()
         self.validate = ValidatorHelper()
         self.preprocess = PreprocessHelper()
+        self.e2e = E2EHelper
         self.merge = MergeHelper()
         self.threshold = ThresholdHelper()
         # self.inference = InferenceHelper()
@@ -58,6 +60,11 @@ class PipelineHelper():
     def submit_preprocess_job(self, valid_files, context):
         batch_id = "-" + Variable.get(key="run_date").replace("_", "-") + "-" + datetime.now().strftime("%f")
         self.preprocess.submit_dataproc_job(valid_files, batch_id, context)
+        return batch_id
+
+    def submit_e2e_validator_job(self, context):
+        batch_id = "-" + Variable.get(key="run_date").replace("_", "-") + "-" + datetime.now().strftime("%f")
+        self.preprocess.submit_dataproc_job(batch_id, context)
         return batch_id
 
     def create_validator_cluster(self, context):
