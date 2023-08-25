@@ -47,7 +47,7 @@ class E2EHelper(Helper):
 
         return pyspark_args
 
-    def submit_manual_dataproc(self, batch_id, context):
+    def submit_dataproc_job(self, batch_id, context):
 
         batch_config = {
             "pyspark_batch": {
