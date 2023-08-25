@@ -139,14 +139,14 @@ def denorm(location_groups):
         obj_helper.delete_batch(constant.DENORM, batch_id, context)
         return location_groups
 
-    # @task
-    # def merge_denorm(location_groups, **context):
-    #     logging.info("merging denorm")
-    #     obj_helper = PipelineHelper()
-    #     obj_helper.denorm_merge(location_groups, context)
-    #     logging.info("-- merging --")
-    #     logging.info(location_groups)
-    #     return location_groups
+    @task
+    def merge_denorm(location_groups, **context):
+        logging.info("merging denorm")
+        obj_helper = PipelineHelper()
+        obj_helper.denorm_merge(location_groups, context)
+        logging.info("-- merging --")
+        logging.info(location_groups)
+        return location_groups
 
     denorm_location_group = delete_job(submit_job(location_groups))
     logging.info(denorm_location_group)
@@ -154,10 +154,10 @@ def denorm(location_groups):
 
 
 @task
-def e2e_job(**context):
+def e2e_job(location_group, **context):
     logging.info(" location group received in submit job- ")
     obj_helper = PipelineHelper()
-    batch_id = obj_helper.submit_e2e_validator_job(context)
+    batch_id = obj_helper.submit_e2e_validator_job(location_group, context)
     return batch_id
 
 
@@ -217,7 +217,7 @@ def start_inference_metric(location_groups, **context):
 def prod_pipeline_v1():
     valid_files = threshold(validator.expand(ingested_files=fd_ingestion()))
     location_groups = get_list_location_groups(preprocess.expand(valid_files=valid_files))
-    denorm_processed_grp = start_bfs(e2e_job(denorm.expand(location_groups=location_groups)))
+    denorm_processed_grp = e2e_job(denorm.expand(location_groups=location_groups))
     # bfs_location_grp = start_inference(business_fs.expand(location_groups=denorm_processed_grp))
     # inf_location_grp = start_inference_metric(inference_helper.inference.expand(location_groups=bfs_location_grp))
     # inference_metrics_helper.inference_metrics(inf_location_grp)
