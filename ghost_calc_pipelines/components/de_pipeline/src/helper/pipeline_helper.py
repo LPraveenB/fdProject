@@ -87,6 +87,8 @@ class PipelineHelper():
             return self.denorm.delete_dataproc_job(constant.DENORM, batch_id, context)
         elif component_name == constant.PREPROCESS:
             return self.preprocess.delete_dataproc_job(constant.PREPROCESS, batch_id, context)
+        elif component_name == constant.E2E:
+            return self.e2e.delete_dataproc_job(constant.E2E, batch_id, context)
         elif component_name == constant.VALIDATOR:
             return self.validate.delete_dataproc_job(constant.VALIDATOR, batch_id, context)
         elif component_name == constant.BUSINESS_FS:

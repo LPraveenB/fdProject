@@ -34,7 +34,7 @@ class E2EHelper(Helper):
 
         pyspark_args = ['--bucket_name',
                         self.get_env_variable("dev-e2e-validator", "base_bucket", "base_path"),
-                        '--load_date', '',
+                        '--load_date',
                         '--error_path',
                         self.get_env_variable("dev-e2e-validator", "error_path", "base_bucket", "base_path"),
                         '--merge_path',
@@ -70,7 +70,7 @@ class E2EHelper(Helper):
             project_id="dollar-tree-project-369709",
             region="us-west1",
             batch=batch_config,
-            batch_id="e2-evalidator-" + batch_id,
+            batch_id="e2e-validator-" + batch_id,
             retries=self.retry_count,
             retry_delay=self.retry_interval
         )

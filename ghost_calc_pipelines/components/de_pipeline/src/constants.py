@@ -10,6 +10,7 @@ COMPONENT_PROP="/home/airflow/gcs/dags/ghost_calc_pipelines/components/de_pipeli
 #COMPONENT_PROP = "/opt/airflow/dags/ghost_calc_pipelines/components/de_pipeline/resources/"
 #INFERENCE_PIPELINE = "/opt/airflow/dags/ghost_calc_pipelines/components/ml_pipeline/src/inference_kubeflow.py"
 DENORM="denorm"
+E2E="e2e_job"
 VALIDATOR="validator"
 PREPROCESS="preprocess"
 BUSINESS_FS="bfs"
