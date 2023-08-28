@@ -36,7 +36,7 @@ class E2EHelper(Helper):
 
         return pyspark_args
 
-    def submit_manual_dataproc(self, context):
+    def submit_manual_dataproc(self):
         cluster_create_task = DataprocCreateClusterOperator(
             task_id="e2e-validator",
             project_id="dollar-tree-project-369709",
@@ -66,6 +66,6 @@ class E2EHelper(Helper):
     # Define the task dependencies
         cluster_create_task >> spark_job_task >> cluster_delete_task
 
-    context = {Variable.get(key="run_date")}
+
 # Call the function to run the Spark job dynamically
     submit_manual_dataproc(context)

@@ -154,10 +154,10 @@ def denorm(location_groups):
 
 
 @task
-def e2e_job(**context):
+def e2e_job():
     logging.info(" e2e validator - ")
     obj_helper = PipelineHelper()
-    batch_id = obj_helper.submit_e2e_validator_job(context)
+    batch_id = obj_helper.submit_e2e_validator_job()
     return batch_id
 
 

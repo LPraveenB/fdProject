@@ -62,9 +62,9 @@ class PipelineHelper():
         self.preprocess.submit_dataproc_job(valid_files, batch_id, context)
         return batch_id
 
-    def submit_e2e_validator_job(self, location_group, context):
+    def submit_e2e_validator_job(self):
         batch_id = "-" + Variable.get(key="run_date").replace("_", "-") + "-" + datetime.now().strftime("%f")
-        self.e2e.submit_manual_dataproc(context)
+        self.e2e.submit_manual_dataproc()
         return batch_id
 
     def create_validator_cluster(self, context):
