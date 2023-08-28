@@ -154,10 +154,10 @@ def denorm(location_groups):
 
 
 @task
-def e2e_job(location_group, **context):
+def e2e_job(**context):
     logging.info(" location group received in submit job- ")
     obj_helper = PipelineHelper()
-    batch_id = obj_helper.submit_e2e_validator_job(location_group, context)
+    batch_id = obj_helper.submit_e2e_validator_job(context)
     return batch_id
 
 
