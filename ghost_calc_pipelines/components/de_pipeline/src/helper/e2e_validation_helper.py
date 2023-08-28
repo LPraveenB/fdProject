@@ -1,18 +1,9 @@
 from ghost_calc_pipelines.components.de_pipeline.src import constants as constant
 from ghost_calc_pipelines.components.de_pipeline.src.helper.helper import Helper
-import json
-from urllib.parse import urlparse
-import logging
-import math
-from google.cloud import storage
-import re
-from google.cloud import dataproc_v1 as dataproc
 from airflow.providers.google.cloud.operators.dataproc import (
     DataprocCreateClusterOperator,
     DataprocDeleteClusterOperator,
-    DataprocSubmitJobOperator,
-    DataprocCreateBatchOperator,
-    DataprocDeleteBatchOperator
+    DataprocSubmitJobOperator
 )
 from airflow.models import Variable
 
@@ -35,6 +26,7 @@ class E2EHelper(Helper):
         pyspark_args = ['--bucket_name',
                         self.get_env_variable("dev-e2e-validator", "base_bucket", "base_path"),
                         '--load_date',
+                        Variable.get(key="run_date"),
                         '--error_path',
                         self.get_env_variable("dev-e2e-validator", "error_path", "base_bucket", "base_path"),
                         '--merge_path',
@@ -44,37 +36,36 @@ class E2EHelper(Helper):
 
         return pyspark_args
 
-    def submit_dataproc_job(self, location_group, batch_id, context):
-
-        batch_config = {
-            "pyspark_batch": {
-                "main_python_file_uri": self.get_env_variable("dev-e2e-validator", "main_python_file_uri", "script_bucket", "script_folder"),
-                "args": self.get_e2e_validator_args()
-            },
-            "runtime_config": {
-                "properties": self.get_env_variable("dev-e2e-validator", "spark_properties")
-            },
-            "environment_config": {
-                "execution_config": {
-                    "service_account": self.get_env_variable("dev-env-config", "service_account"),
-                    "subnetwork_uri": self.get_env_variable("dev-env-config", "subnetwork_uri")
-                },
-            }
-        }
-
-        print(" printing batch config ********* ")
-        print(batch_config)
-
-        run_batch = DataprocCreateBatchOperator(
-            task_id="e2e-validator" + batch_id,
+    def submit_manual_dataproc(self, context):
+        cluster_create_task = DataprocCreateClusterOperator(
+            task_id="e2e-validator",
             project_id="dollar-tree-project-369709",
             region="us-west1",
-            batch=batch_config,
-            batch_id="e2e-validator-" + batch_id,
-            retries=self.retry_count,
-            retry_delay=self.retry_interval
+            cluster_name="e2e-validator-cluster",
+            num_workers=2,  # Specify the number of worker nodes
+            worker_machine_type="n1-standard-4",  # Specify the machine type
+
         )
-        return run_batch.execute(context)
 
+        spark_job_task = DataprocSubmitJobOperator(
+            task_id="run_e2e_job",
+            main="gs://vertex-scripts/de-scripts/e2e-validator/e2eValidationComponent.py",
+            project_id="dollar-tree-project-369709",
+            region="us-west1",
+            cluster_name="e2e-validator-cluster",
+            arguments=self.get_e2e_validator_args()
+        )
 
+        cluster_delete_task = DataprocDeleteClusterOperator(
+            task_id="delete_dataproc_cluster",
+            project_id="dollar-tree-project-369709",
+            region="us-west1",
+            cluster_name="e2e-validator-cluster"
+        )
 
+    # Define the task dependencies
+        cluster_create_task >> spark_job_task >> cluster_delete_task
+
+    context = {Variable.get(key="run_date")}
+# Call the function to run the Spark job dynamically
+    submit_manual_dataproc(context)
