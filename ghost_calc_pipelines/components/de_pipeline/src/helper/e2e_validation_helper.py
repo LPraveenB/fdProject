@@ -66,7 +66,7 @@ class E2EHelper(Helper):
         print(batch_config)
 
         run_batch = DataprocCreateBatchOperator(
-            task_id="e2-evalidator" + batch_id,
+            task_id="e2e-validator" + batch_id,
             project_id="dollar-tree-project-369709",
             region="us-west1",
             batch=batch_config,
