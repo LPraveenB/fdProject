@@ -26,10 +26,7 @@ class E2EHelper(Helper):
         """
 
         Args:
-            bucket_name:
-            load_date:
-            error_path:
-            task_name:
+
 
         Returns:
 
@@ -51,7 +48,7 @@ class E2EHelper(Helper):
 
         batch_config = {
             "pyspark_batch": {
-                "main_python_file_uri": self.get_env_variable("dev-e2e-validator", "main_python_file_uri"),
+                "main_python_file_uri": self.get_env_variable("dev-e2e-validator", "main_python_file_uri", "script_bucket", "script_folder"),
                 "args": self.get_e2e_validator_args()
             },
             "runtime_config": {
@@ -78,4 +75,6 @@ class E2EHelper(Helper):
             retry_delay=self.retry_interval
         )
         return run_batch.execute(context)
+
+
 

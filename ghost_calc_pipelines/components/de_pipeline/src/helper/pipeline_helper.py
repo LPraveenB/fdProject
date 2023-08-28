@@ -20,7 +20,7 @@ class PipelineHelper():
         self.denorm = DenormHelper()
         self.validate = ValidatorHelper()
         self.preprocess = PreprocessHelper()
-        self.e2e = E2EHelper
+        self.e2e = E2EHelper()
         self.merge = MergeHelper()
         self.threshold = ThresholdHelper()
         # self.inference = InferenceHelper()
