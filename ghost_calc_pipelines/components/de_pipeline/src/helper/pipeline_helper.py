@@ -64,7 +64,7 @@ class PipelineHelper():
 
     def submit_e2e_validator_job(self, context):
         batch_id = "-" + Variable.get(key="run_date").replace("_", "-") + "-" + datetime.now().strftime("%f")
-        self.e2e.submit_dataproc_job(batch_id, context)
+        self.e2e.submit_dataproc_job(context)
         return batch_id
 
     def create_validator_cluster(self, context):
