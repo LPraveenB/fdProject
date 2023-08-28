@@ -140,7 +140,7 @@ def denorm(location_groups):
         return location_groups
 
     @task
-    def merge_denorm(location_groups, **context):
+    def merge_denorm(**context):
         logging.info("merging denorm")
         obj_helper = PipelineHelper()
         obj_helper.denorm_merge(location_groups, context)
