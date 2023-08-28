@@ -153,22 +153,12 @@ def denorm(location_groups):
     return denorm_location_group
 
 
-@task_group
-def e2e_job():
-    @task
-    def submit_job(**context):
-        logging.info(" e2e validator - ")
-        obj_helper = PipelineHelper()
-        batch_id = obj_helper.submit_e2e_validator_job(context)
-        return batch_id
-
-    @task
-    def delete_job(submit_batch_details, **context):
-        batch_id = submit_batch_details[1]
-        location_groups = submit_batch_details[0]
-        obj_helper = PipelineHelper()
-        obj_helper.delete_batch(constant.E2E, batch_id, context)
-        return batch_id
+@task
+def e2e_job(location_group, **context):
+    logging.info(" e2e validator - ")
+    obj_helper = PipelineHelper()
+    batch_id = obj_helper.submit_e2e_validator_job(location_group, context)
+    return batch_id
 
 
 @task
