@@ -1,9 +1,16 @@
 from ghost_calc_pipelines.components.de_pipeline.src import constants as constant
 from ghost_calc_pipelines.components.de_pipeline.src.helper.helper import Helper
+import json
+from urllib.parse import urlparse
+import logging
+import math
+from google.cloud import storage
+import re
+from google.cloud import dataproc_v1 as dataproc
 from airflow.providers.google.cloud.operators.dataproc import (
-    DataprocCreateClusterOperator,
-    DataprocDeleteClusterOperator,
-    DataprocSubmitJobOperator
+    DataprocSubmitJobOperator,
+    DataprocCreateBatchOperator,
+    DataprocDeleteBatchOperator
 )
 from airflow.models import Variable
 
@@ -12,6 +19,7 @@ class E2EHelper(Helper):
 
     def __init__(self):
         super().__init__()
+        self.retry_count = 1
 
     def get_e2e_validator_args(self) -> list:
         """
@@ -25,47 +33,63 @@ class E2EHelper(Helper):
 
         pyspark_args = ['--bucket_name',
                         self.get_env_variable("dev-e2e-validator", "base_bucket", "base_path"),
-                        '--load_date',
-                        Variable.get(key="run_date"),
+                        '--input_path',
+                        self.get_env_variable("dev-e2e-validator", "input_path", "base_path"),
                         '--error_path',
-                        self.get_env_variable("dev-e2e-validator", "error_path", "base_bucket", "base_path"),
-                        '--merge_path',
-                        self.get_env_variable("dev-e2e-validator", "merge_path", "base_bucket", "base_path"),
+                        self.get_env_variable("dev-e2e-validator", "error_path", "base_path"),
 
                         ]
 
         return pyspark_args
 
-    def submit_manual_dataproc(self):
-        cluster_create_task = DataprocCreateClusterOperator(
-            task_id="e2e-validator",
+    def submit_dataproc_job(self, location_group, batch_id, context):
+
+        batch_config = {
+            "pyspark_batch": {
+                "main_python_file_uri": self.get_env_variable("dev-e2e-validator", "main_python_file_uri", "script_bucket", "script_folder"),
+                "args": self.get_e2e_validator_args(),
+                "python_file_uris": [self.get_env_variable("dev-e2e-validator", "python_file_uris")]
+            },
+            "runtime_config": {
+                "properties": self.get_env_variable("dev-e2e-validator", "spark_properties")
+            },
+            "environment_config": {
+                "execution_config": {
+                    "service_account": self.get_env_variable("dev-env-config", "service_account"),
+                    "subnetwork_uri": self.get_env_variable("dev-env-config", "subnetwork_uri")
+                },
+            }
+        }
+
+        print(" printing batch config ********* ")
+        print(batch_config)
+
+        run_batch = DataprocCreateBatchOperator(
+            task_id="e2e-validator" + batch_id,
             project_id="dollar-tree-project-369709",
             region="us-west1",
-            cluster_name="e2e-validator-cluster",
-            num_workers=2,  # Specify the number of worker nodes
-            worker_machine_type="n1-standard-4",  # Specify the machine type
-
+            batch=batch_config,
+            batch_id="e2e-validator-" + batch_id,
+            retries=self.retry_count,
+            retry_delay=self.retry_interval
         )
+        return run_batch.execute(context)
 
-        spark_job_task = DataprocSubmitJobOperator(
-            task_id="run_e2e_job",
-            main="gs://vertex-scripts/de-scripts/e2e-validator/e2eValidationComponent.py",
-            project_id="dollar-tree-project-369709",
-            region="us-west1",
-            cluster_name="e2e-validator-cluster",
-            arguments=self.get_e2e_validator_args()
-        )
+    def check_batch_status(self, location_group, batch_id, context):
+        run_batch = self.submit_dataproc_job(location_group, batch_id, context)
+        batch_result = run_batch.execute(context)
 
-        cluster_delete_task = DataprocDeleteClusterOperator(
-            task_id="delete_dataproc_cluster",
-            project_id="dollar-tree-project-369709",
-            region="us-west1",
-            cluster_name="e2e-validator-cluster"
-        )
+        if batch_result['status']['state'] == 'DONE':
+            logging.info("Batch job completed successfully")
+            # Now you can capture the output or status message from the batch result
+            # and make decisions about the pipeline continuation based on that
 
-    # Define the task dependencies
-        cluster_create_task >> spark_job_task >> cluster_delete_task
+            # For example, if you want to check for the "Discontinue pipeline" message:
+            if "Discontinue pipeline" in batch_result['status']['details']:
+                logging.error("Discontinue pipeline message found. Stopping pipeline.")
+                # You might want to raise an exception here or perform other actions
+            else:
+                logging.info("Pipeline can continue.")
 
-
-# Call the function to run the Spark job dynamically
-    submit_manual_dataproc(context)
+        else:
+            logging.error(f"Batch job failed with state: {batch_result['status']['state']}")

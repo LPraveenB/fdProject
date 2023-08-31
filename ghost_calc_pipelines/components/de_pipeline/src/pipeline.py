@@ -1,6 +1,6 @@
 import os
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 from airflow.decorators import dag, task, task_group
 from airflow.utils.dates import days_ago
 from airflow.models import Variable
@@ -139,26 +139,28 @@ def denorm(location_groups):
         obj_helper.delete_batch(constant.DENORM, batch_id, context)
         return location_groups
 
-    @task
-    def merge_denorm(**context):
-        logging.info("merging denorm")
-        obj_helper = PipelineHelper()
-        obj_helper.denorm_merge(location_groups, context)
-        logging.info("-- merging --")
-        logging.info(location_groups)
-        return location_groups
 
     denorm_location_group = delete_job(submit_job(location_groups))
     logging.info(denorm_location_group)
     return denorm_location_group
 
 
-@task
-def e2e_job():
-    logging.info(" e2e validator - ")
+@task(retry_delay=timedelta(seconds=0), retries=0)
+def e2e_job(location_group, **context):
+    logging.info("e2e validator")
     obj_helper = PipelineHelper()
-    batch_id = obj_helper.submit_e2e_validator_job()
-    return batch_id
+    batch_id = obj_helper.submit_e2e_validator_job(location_group, context)
+    batch_status = obj_helper.check_e2e_status(location_group,batch_id, context)
+    return batch_id, batch_status
+
+@task
+def merge_denorm(location_groups, **context):
+    logging.info("merging denorm")
+    obj_helper = PipelineHelper()
+    obj_helper.denorm_merge(location_groups, context)
+    logging.info("-- merging --")
+    logging.info(location_groups)
+    return location_groups
 
 
 @task
@@ -214,13 +216,13 @@ def start_inference_metric(location_groups, **context):
 
 
 @dag(schedule_interval=None, default_args=default_args, catchup=False)
-def prod_pipeline_v1():
+def praveen_pipeline_v1():
     valid_files = threshold(validator.expand(ingested_files=fd_ingestion()))
     location_groups = get_list_location_groups(preprocess.expand(valid_files=valid_files))
-    denorm_processed_grp = e2e_job(denorm.expand(location_groups=location_groups))
+    denorm_processed_grp = merge_denorm(e2e_job(denorm.expand(location_groups=location_groups)))
     # bfs_location_grp = start_inference(business_fs.expand(location_groups=denorm_processed_grp))
     # inf_location_grp = start_inference_metric(inference_helper.inference.expand(location_groups=bfs_location_grp))
     # inference_metrics_helper.inference_metrics(inf_location_grp)
 
 
-dag = prod_pipeline_v1()
+dag = praveen_pipeline_v1()
