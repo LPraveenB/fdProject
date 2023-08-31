@@ -146,12 +146,11 @@ def denorm(location_groups):
 
 
 @task(retry_delay=timedelta(seconds=0), retries=0)
-def e2e_job(location_group, **context):
+def e2e_check(location_group, **context):
     logging.info("e2e validator")
     obj_helper = PipelineHelper()
     batch_id = obj_helper.submit_e2e_validator_job(location_group, context)
-    batch_status = obj_helper.check_e2e_status(location_group,batch_id, context)
-    return batch_id, batch_status
+    return batch_id
 
 @task
 def merge_denorm(location_groups, **context):

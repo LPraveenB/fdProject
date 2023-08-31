@@ -74,22 +74,3 @@ class E2EHelper(Helper):
             retry_delay=self.retry_interval
         )
         return run_batch.execute(context)
-
-    def check_batch_status(self, location_group, batch_id, context):
-        run_batch = self.submit_dataproc_job(location_group, batch_id, context)
-        batch_result = run_batch.execute(context)
-
-        if batch_result['status']['state'] == 'DONE':
-            logging.info("Batch job completed successfully")
-            # Now you can capture the output or status message from the batch result
-            # and make decisions about the pipeline continuation based on that
-
-            # For example, if you want to check for the "Discontinue pipeline" message:
-            if "Discontinue pipeline" in batch_result['status']['details']:
-                logging.error("Discontinue pipeline message found. Stopping pipeline.")
-                # You might want to raise an exception here or perform other actions
-            else:
-                logging.info("Pipeline can continue.")
-
-        else:
-            logging.error(f"Batch job failed with state: {batch_result['status']['state']}")
