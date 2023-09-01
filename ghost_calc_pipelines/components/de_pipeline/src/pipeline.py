@@ -218,7 +218,7 @@ def start_inference_metric(location_groups, **context):
 def praveen_pipeline_v1():
     valid_files = threshold(validator.expand(ingested_files=fd_ingestion()))
     location_groups = get_list_location_groups(preprocess.expand(valid_files=valid_files))
-    denorm_processed_grp = merge_denorm(e2e_job(denorm.expand(location_groups=location_groups)))
+    denorm_processed_grp = merge_denorm(e2e_check(denorm.expand(location_groups=location_groups)))
     # bfs_location_grp = start_inference(business_fs.expand(location_groups=denorm_processed_grp))
     # inf_location_grp = start_inference_metric(inference_helper.inference.expand(location_groups=bfs_location_grp))
     # inference_metrics_helper.inference_metrics(inf_location_grp)
